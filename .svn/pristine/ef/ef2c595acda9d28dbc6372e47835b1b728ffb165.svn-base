@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<title id="titl" runat="server">juggernaut_chat | <%= this_blog.blog_name %> </title>
+		<%= javascript_include_tag 'jquery-1.3.2', 'json','juggernaut/juggernaut', 'juggernaut/jquerynaut', 'juggernaut/swfobject'  %>
+		<%= juggernaut(:debug => false) %>
+	</head>
+	<body style="padding: 2em 5em;">
+		<p><%= link_to "POST","http://wxianfeng.com/2009/11/24/rails-comet-juggernaut",:target=>"_blank" %></p>
+		<form action="" method="get">
+			<div style="margin:0;padding:0">
+				<%=text_area_tag :chat_input , nil , :cols => 100, :rows => 2 %>
+				<input name="commit" type="button" value="Send" id="b_submit"/>
+			</div>
+		</form>
+		<script type="text/javascript">
+
+			/** 修剪字串前后的空格  */
+			function trim(s) {
+				var count = s.length;
+				var st    = 0;       // start
+				var end   = count-1; // end
+
+				if (s == "") return s;
+				while (st < count) {
+					if (s.charAt(st) == " ")
+						st ++;
+					else
+						break;
+				}
+				while (end > st) {
+					if (s.charAt(end) == " ")
+						end --;
+					else
+						break;
+				}
+				return s.substring(st,end + 1);
+			}
+
+
+			$(document).ready(function(){
+				$('#b_submit').click(function(){
+					if(trim($("#chat_input").val()) != ""){
+						$.get('/demos/send_data_j', { chat_input: $('#chat_input').val() },function(data){
+							$("#chat_input").val("");
+						} )
+						return false;
+					}else{
+						alert("input is empty!");
+						$("#chat_input").focus();
+					}
+				})
+			})
+
+			var timeout = null;
+			var set_title = function(){
+				var b = "新提醒";
+				var c = $("#chat_data > li").eq([0]).text().match(/---\s(.*)\s---/)[1];
+				var t = new Date();
+				s = t.getSeconds();
+				if(s%2 == 0){
+					document.title = b;
+				}else{
+					document.title = c;
+				}
+				// setTimeout("settitle()", 1000);
+			}
+			var clear_title = function(){
+				clearTimeout(timeout);
+			}
+			var update_title = function(){
+				timeout =  setInterval("set_title()",500);
+				setTimeout("clear_title()", 10000);
+			}
+		</script>
+		<div style="display:none">
+			<input type='button' id="updatetitle" onclick='update_title();' value='Change Title'/>
+		</div>
+		<ul id="chat_data" style="list-style:none">
+			<% @chats.each do |ele| %>
+				<li><%= ele.created_at.to_s(:db) %> --- <span style='color:#CC0000;'><%= ele.body %></span> --- <%=ele.ip %>
+					<span style="font-size:11px;"><%=ele.ip_country%><%= ele.ip_city %><%= ele.ip_idc %></span>
+					<!-- <img src="http://api.hostip.info/flag.php?ip=12.215.42.19" alt="" width="30px" height="15px"/>-->
+				</li>
+			<% end %>
+		</ul>
+	</body>
+</html>

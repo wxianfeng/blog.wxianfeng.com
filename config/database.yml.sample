@@ -1,0 +1,18 @@
+login: &login
+  adapter: mysql
+  host: 
+  username: 
+  password: 
+  encoding: utf8
+
+development:
+  database: wxianfeng_com_dev
+  <<: *login
+
+test:
+  database: wxianfeng_com_test
+  <<: *login
+
+production:
+  database: wxianfeng_com_production
+  <<: *login

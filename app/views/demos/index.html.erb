@@ -1,0 +1,5 @@
+<h1>Demos:</h1>
+<% @demos.each_with_index do |ele,index| %>
+<%= index + 1 %> : <%= link_to ele[0],ele[1],:target=>"_blank" %> <br/>
+<% end %>
+<br/><br/>

@@ -1,0 +1,28 @@
+<%# See: http://galleria.aino.se/ %>
+<%= javascript_include_tag  'jquery-1.3.2'  ,  'galleria' , 'galleria.flickr' %>
+<style type="text/css">
+  div.links{
+    text-align: center;
+  }
+</style>
+<div class="links">
+  <%= link_to 'Return  To Wxianfeng.com' ,'/' %>
+  <%= link_to "See wxianfeng's Flickr Page","http://www.flickr.com/photos/wxianfeng" , :target=>"_blank" %>
+</div>
+<div id="galleria"></div>
+<script type="text/javascript">
+  // Load theme
+  // Galleria.loadTheme('/galleria/themes/lightbox/galleria.lightbox.js');
+  Galleria.loadTheme('/galleria/themes/classic/galleria.classic.js');
+  // Flickr init
+  var flickr = new Galleria.Flickr("<%= FLICKR_KEY  %>");
+  // Get my photostream
+  flickr.setOptions({
+    size: 'medium'
+  }).getUser('wxianfeng', function(data) {
+    jQuery('#galleria').galleria({
+      data_source: data,
+      debug: true
+    });
+  });
+</script>

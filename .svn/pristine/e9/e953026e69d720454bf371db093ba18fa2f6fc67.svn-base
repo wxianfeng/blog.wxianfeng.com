@@ -1,0 +1,18 @@
+login: &login
+  adapter: mysql
+  host: 106.187.47.146
+  username: root
+  password: wxf19870104
+  encoding: utf8
+
+development:
+  database: wxianfeng_com_dev
+  <<: *login
+
+test:
+  database: wxianfeng_com_test
+  <<: *login
+
+production:
+  database: wxianfeng_com_production
+  <<: *login

@@ -1,0 +1,15 @@
+<h3><%=h sidebar.title %></h3>
+<div>
+  <ul>
+    <% for comment in sidebar.comments -%>
+      <li>
+  <%# title = ''; title << 'by ' + comment.author if sidebar.show_username -%>
+  <%# title << ' on ' + comment.article.title if sidebar.show_article -%>
+        <% title = comment.body  %>
+        <% # title << '---' << comment.author if sidebar.show_username  %>
+        <%= link_to_permalink comment,h(truncate(title,30,"...")) , nil , nil , nil ,  h(title) %><%= '-' << comment.author if sidebar.show_username  %>
+      </li>
+    <% end %>
+    <% debugger %>
+  </ul>
+</div>

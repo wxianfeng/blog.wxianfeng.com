@@ -1,0 +1,8 @@
+method: :smtp
+settings:
+  :address: "mail.wxianfeng.com"
+  :port:    25
+  :domain:  "wxianfeng.com"
+  :authentication:  :login
+  :user_name: "wxianfeng"
+  :password: "wxf19870104"
