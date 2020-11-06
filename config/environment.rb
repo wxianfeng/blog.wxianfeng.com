@@ -152,7 +152,7 @@ end
 ActionController::Base.asset_host = Proc.new { |source|
  if RAILS_ENV == 'production'
   if source.start_with?('/images/theme') or source.start_with?('/stylesheets/theme') or source.start_with?('/javascripts/theme')
-    "http://wxianfeng.com"
+    "http://blog.wxianfeng.com"
   else
     "http://assets.wxianfeng.com"
   end
